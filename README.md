@@ -3,7 +3,7 @@ Custom MD5 engine for OpenSSL 1.1.1 example.
 
 Use `make` to generate engine file `md5-engine.so` and `md5test` executable.
 
-# Installing The Engine:
+# Installing The Engine
 
 ## Check OpenSSL Engine Directory
 ```sh
@@ -24,10 +24,6 @@ If your `ENGINESDIR` is different, change it in the `Makefile`.
 $ sudo make install
 ```
 This will install the engine into `/usr/lib/x86_64-linux-gnu/engines-1.1/`, make sure this is your OpenSSL engine directory.
-
-
-# Usage Example
-Run `./md5test whatever`, this will output the digest of `whateve` instead of `whatever` because we modified the md5 engine to omit the last char.
 
 # How it Works
 - Take the md5 algo from rfc1321 (https://www.ietf.org/rfc/rfc1321.txt), extract three files and put in `rfc1321/` folder.
@@ -86,5 +82,8 @@ Run `./md5test whatever`, this will output the digest of `whateve` instead of `w
   /* Release the structural reference from ENGINE_by_id() */
   ENGINE_free(e);
   ```
+# Usage Example
+Run `./md5test whatever`, this will output the digest of `whateve` instead of `whatever` because we modified the md5 engine to omit the last char.
+
 # License 
 GNU General Public License v3.0
