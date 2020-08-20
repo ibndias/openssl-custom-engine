@@ -18,6 +18,7 @@ ENGINESDIR: "/usr/lib/x86_64-linux-gnu/engines-1.1"
 Seeding source: os-specific
 ```
 If your `ENGINESDIR` is different, change it in the `Makefile`.
+`/usr/lib/x86_64-linux-gnu/engines-1.1/md5-engine.so` into `<your-engines-directory>/md5-engine.so`
 
 ## Install
 ```sh
@@ -84,6 +85,8 @@ This will install the engine into `/usr/lib/x86_64-linux-gnu/engines-1.1/`, make
   ```
 # Usage Example
 Run `./md5test whatever`, this will output the digest of `whateve` instead of `whatever` because we modified the md5 engine to omit the last char.
+Here, we try to compare our md5 engine with original openssl md5 digest.
+[![asciicast](https://asciinema.org/a/354475.svg)](https://asciinema.org/a/354475)
 
 # License 
 GNU General Public License v3.0
