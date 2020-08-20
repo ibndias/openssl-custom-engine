@@ -86,7 +86,7 @@ This will install the engine into `/usr/lib/x86_64-linux-gnu/engines-1.1/`, make
 # Usage Example
 Run `./md5test whatever`, this will output the digest of `whateve` instead of `whatever` because we modified the md5 engine to omit the last char.
 Here, we try to compare our md5 engine with original openssl md5 digest.
-![](https://media.giphy.com/media/JTVuUJJmHLujx1vLiV/giphy.gif)
+[![asciicast](https://asciinema.org/a/354475.svg)](https://asciinema.org/a/354475)
 
 # License 
 GNU General Public License v3.0
