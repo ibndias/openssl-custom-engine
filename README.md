@@ -18,7 +18,7 @@ ENGINESDIR: "/usr/lib/x86_64-linux-gnu/engines-1.1"
 Seeding source: os-specific
 ```
 If your `ENGINESDIR` is different, change it in the `Makefile`.
-`/usr/lib/x86_64-linux-gnu/engines-1.1/md5-engine.so` into `<your-engines-directory>/md5-engine.so`
+Find `/usr/lib/x86_64-linux-gnu/engines-1.1/md5-engine.so` and change it into `<your-engines-directory>/md5-engine.so`
 
 ## Install
 ```sh
@@ -85,8 +85,62 @@ This will install the engine into `/usr/lib/x86_64-linux-gnu/engines-1.1/`, make
   ```
 # Usage Example
 Run `./md5test whatever`, this will output the digest of `whateve` instead of `whatever` because we modified the md5 engine to omit the last char.
+
+## Compare Our Engine with Default
 Here, we try to compare our md5 engine with original openssl md5 digest.
 [![asciicast](https://asciinema.org/a/354475.svg)](https://asciinema.org/a/354475)
+
+## Set Our Engine as Default
+This one is when we set our engine as default md5 digest for OpenSSL.
+[![asciicast](https://asciinema.org/a/354487.svg)](https://asciinema.org/a/354487)
+
+# How to Set Custom Engine as Default for OpenSSL
+To use the engine by default, configure the engine in `openssl.cnf`.
+See [openssl-config(5)](https://www.openssl.org/docs/man1.1.1/man5/config.html)
+for details.
+
+Include the following definition in the default section--the first
+section before any other bracketed section header:
+
+    openssl_conf=openssl_conf
+
+This section, which contains the global openssl defaults, should include an
+engines section for engine configuration:
+
+    [openssl_conf]
+    engines=engines
+
+The engines section will have a list of engines to enable, pointing to that
+engine's configuration section:
+
+    [engines]
+    md5-engine=md5-engine
+
+Now, in the `md5-engine` section, we can configure the engine itself.  The
+`default_algorithms` option is only used to enable the engine.  The selection
+of ciphers and digests to enable is different:
+
+    [md5-engine]
+    default_algorithms=ALL
+
+To test the configuration, run the following command:
+
+    openssl engine -t -c -v
+
+It should display the engine as available, along with the list of algorithms
+enabled and the configuration commands accepted by the engine:
+```
+(rdrand) Intel RDRAND engine
+ [RAND]
+     [ available ]
+(dynamic) Dynamic engine loading support
+     [ unavailable ]
+     SO_PATH, NO_VCHECK, ID, LIST_ADD, DIR_LOAD, DIR_ADD, LOAD
+(MD5) A simple md5 engine for demonstration purposes
+ [MD5]
+     [ available ]
+```
+Now the OpenSSL will use our MD5 engine as default.
 
 # License 
 GNU General Public License v3.0
